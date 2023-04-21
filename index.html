@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Bienvenido a UltraTIA</title>
+    <script src="https://sdk.amazonaws.com/js/aws-sdk-2.41.0.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css"
+    />
+    <link rel="stylesheet" href="https://use.typekit.net/aqm0grf.css" />
+    <style language="text/css">
+      :root {
+        --darkblue: #082c64;
+        --lightblue: #e3fbfa;
+        --white: #f4f8f9;
+        --black: #405371;
+      }
+      body,
+      html {
+        height: 100svh;
+      }
+      html {
+        background-color: var(--darkblue);
+
+        background-image: url(img/back-pattern.svg);
+        background-size: 100%;
+        font-family: "brandon-grotesque", sans-serif;
+        font-weight: 400;
+        font-style: normal;
+      }
+      body {
+        color: var(--lightblue);
+      }
+      .is-bold {
+        font-family: "brandon-grotesque", sans-serif;
+        font-weight: 700;
+        font-style: normal;
+      }
+      is-black {
+        font-family: "brandon-grotesque", sans-serif;
+        font-weight: 900;
+        font-style: normal;
+      }
+      .is-borderless {
+        border: none;
+      }
+      .has-text-black {
+        color: var(--black);
+      }
+      .is-gradient-green {
+        background: hsla(184, 100%, 52%, 1);
+
+        background: linear-gradient(
+          135deg,
+          hsla(184, 100%, 52%, 1) 0%,
+          hsla(184, 94%, 43%, 1) 100%
+        );
+
+        background: -moz-linear-gradient(
+          135deg,
+          hsla(184, 100%, 52%, 1) 0%,
+          hsla(184, 94%, 43%, 1) 100%
+        );
+
+        background: -webkit-linear-gradient(
+          135deg,
+          hsla(184, 100%, 52%, 1) 0%,
+          hsla(184, 94%, 43%, 1) 100%
+        );
+
+        filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#0AEEFF", endColorstr="#07C5D3", GradientType=1 );
+        box-shadow: 0 0 26px #29e7f58c;
+        transition: all .3s ease-in;
+      }
+      .is-gradient-green:hover {
+        box-shadow: none;
+      }
+      .logo {
+        font-family: "brandon-grotesque", sans-serif;
+        font-weight: 700;
+        font-style: normal;
+      }
+      input::placeholder {
+        color: #ccc;
+        font-style: italic;
+      }
+      p.userRequest {
+        margin: 4px;
+        padding: 4px 10px 4px 10px;
+        border-radius: 4px;
+        min-width: 50%;
+        max-width: 85%;
+        float: left;
+        background-color: #7d7;
+      }
+      p.lexResponse {
+        margin: 4px;
+        padding: 4px 10px 4px 10px;
+        border-radius: 4px;
+        text-align: right;
+        min-width: 50%;
+        max-width: 85%;
+        float: right;
+        background-color: #bbf;
+        font-style: italic;
+      }
+      p.lexError {
+        margin: 4px;
+        padding: 4px 10px 4px 10px;
+        border-radius: 4px;
+        text-align: right;
+        min-width: 50%;
+        max-width: 85%;
+        float: right;
+        background-color: #f77;
+      }
+      #conversation {
+        flex: 1;
+        background-color: var(--white);
+      }
+      .chatPanel {
+        background: rgb(32, 103, 218);
+        background: linear-gradient(
+          52deg,
+          rgba(32, 103, 218, 1) 0%,
+          rgba(20, 76, 174, 1) 100%
+        );
+        box-shadow: 6px 0px 12px #05156a9b;
+        border-radius: 10px 0px 0px 10px;
+        z-index: 2;
+        display: flex;
+    flex-direction: column;
+    justify-content: stretch;
+      }
+      .chatContainer {
+        flex-grow: 4;
+        background-color: var(--white);
+        display: flex;
+        flex-direction: column;
+      }
+      .tips {
+        background: rgb(22, 78, 165);
+        background: linear-gradient(
+          52deg,
+          rgba(22, 78, 165, 1) 0%,
+          rgba(17, 60, 127, 1) 100%
+        );
+        box-shadow: 0px 0px 99px #05156a9b;
+        border-radius: 0px 10px 10px 0px;
+      }
+      .tips .tipsGroup {
+        position: relative;
+      }
+      .tips .tipsGroup p {
+        position: relative;
+        opacity: 0;
+        transition: opacity 1s ease-in-out;
+        display: none;
+      }
+
+      .tips .tipsGroup p.active {
+        opacity: 1;
+        display: block;
+      }
+      .header{height: 6svh;}
+      .content{height: 89svh;}
+      .legal{height: 5svh;}
+      @media (max-width: 767.98px) {
+        .header{height: 10svh;}
+        #conversation{min-height: 60svh;}
+        .content {height: 110svh;}
+        .chatPanel {
+          border-radius: 0;
+        }
+        .hero {
+          width: 100svw;
+        }
+        .p-3-mobile {
+          padding: 0.75rem !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="header columns">
+      <div class="column py-4 px-5">
+        <h1 class="pt-2 logo is-size-1 is-size-2-mobile has-text-centered-mobile">UltraTIA.</h1>
+      </div>
+    </div>
+    <div class="content columns is-mobile is-multiline p-5">
+      <div class="column is-12-mobile is-8-tablet chatPanel p-5 p-3-mobile">
+        <div id="conversation"></div>
+        <form id="chatform" style="margin-top: 10px" onsubmit="return pushChat();">
+          <div class="field is-grouped">
+            <p class="control is-expanded">
+              <input
+                type="text"
+                id="wisdom"
+                size="80"
+                value=""
+                placeholder="Hola, ¿en que puedo ayudarte?"
+                class="input is-medium"
+              />
+            </p>
+            <p class="control">
+              <a class="button is-medium is-gradient-green is-borderless">
+                <span class="icon send has-text-black mt-2">
+                  <i
+                    ><svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                      width="80"
+                      height="80"
+                      viewBox="0 0 160.269 160.301"
+                    >
+                      <defs>
+                        <linearGradient
+                          id="linear-gradient"
+                          y1="0.235"
+                          x2="1"
+                          y2="0.651"
+                          gradientUnits="objectBoundingBox"
+                        >
+                          <stop offset="0" stop-color="#405371" />
+                          <stop offset="1" stop-color="#263a5f" />
+                        </linearGradient>
+                        <filter
+                          id="Trazado_41"
+                          x="0"
+                          y="0"
+                          width="160.269"
+                          height="160.301"
+                          filterUnits="userSpaceOnUse"
+                        >
+                          <feOffset input="SourceAlpha" />
+                          <feGaussianBlur stdDeviation="20" result="blur" />
+                          <feFlood flood-color="#00fff5" />
+                          <feComposite operator="in" in2="blur" />
+                          <feComposite in="SourceGraphic" />
+                        </filter>
+                      </defs>
+                      <g
+                        transform="matrix(1, 0, 0, 1, 0, 0)"
+                        filter="url(#Trazado_41)"
+                      >
+                        <path
+                          id="Trazado_41-2"
+                          data-name="Trazado 41"
+                          d="M170.767,196.287l-6.951-15.83,9.223-9.223a1.168,1.168,0,0,0-1.652-1.652l-9.223,9.223-15.83-6.951a1.294,1.294,0,0,1,.138-2.409l37.717-12.6a1.25,1.25,0,0,1,1.583,1.583l-12.6,37.786a1.291,1.291,0,0,1-2.409.069Z"
+                          transform="translate(-85.57 -96.78)"
+                          fill="url(#linear-gradient)"
+                        />
+                      </g>
+                    </svg>
+                  </i>
+                </span>
+                <span class="has-text-black">Enviar</span>
+              </a>
+            </p>
+          </div>
+        </form>
+      </div>
+      <div class="column is-4-tablet tips p-5">
+        <span class="icon-text mb-3">
+          <span class="icon"><img src="img/icon-tip.svg" alt="" /></span>
+          <span class="is-size-5 is-bold">Consejo</span>
+        </span>
+        <div class="tipsGroup">
+          <p>
+            Constantemente estoy aprendiendo nuevos temas sobre GrupoUltra. Te
+            recomiendo hacer nuevas preguntas cada cierto tiempo.
+          </p>
+          <p>
+            Al igual que con cualquier otra conversación, es importante comenzar
+            con un saludo. De esta manera, sabré que estás interactuando conmigo
+            y podré responder adecuadamente.
+          </p>
+
+          <p>
+            Asegúrate de hacer preguntas claras y directas. De esta manera podré
+            entender mejor lo que necesitas y ofrecerte una respuesta precisa.
+          </p>
+
+          <p>
+            Si estás buscando información sobre un tema en particular, asegúrate
+            de ser específico al hacer tus preguntas. De esta manera, podré
+            entender mejor lo que estás buscando y ofrecerte una respuesta más
+            relevante.
+          </p>
+
+          <p>
+            A veces, puedo tardar un poco en procesar la información y ofrecer
+            una respuesta. Si esto sucede, sé paciente y espera unos segundos
+            antes de hacer otra pregunta.
+          </p>
+
+          <p>
+            Si estás buscando información sobre un tema en particular, asegúrate
+            de usar palabras clave relevantes en tus preguntas. Esto ayudará a
+            entenderte mejor sobre lo que estás buscando y ofrecerte una
+            respuesta más precisa.
+          </p>
+
+          <p>
+            Evita hacer preguntas innecesarias o repetitivas. Esto puede
+            confundirme y hacer que tarde más en ofrecerte una respuesta.
+          </p>
+
+          <p>
+            Si el no te ofrezco la respuesta que estás buscando, no te
+            desanimes. Intenta reformular tu pregunta o buscar información en
+            otros lugares.
+          </p>
+
+          <p>
+            Recuerda que soy una herramienta diseñada para ayudarte. Por lo
+            tanto, asegúrate de ser amable y respetuoso en tus interacciones.
+          </p>
+          <div class="is-clearfix"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="legal columns is-mobile is-centered ">
+      <div class="column is-3-mobile is-2-tablet p-0">
+        <figure class="image is-3by1">
+          <img src="img/logo-ultra.svg" />
+        </figure>
+      </div>
+    </div>
+    <script type="text/javascript">
+      // set the focus to the input box
+      document.getElementById("wisdom").focus();
+  
+      // Initialize the Amazon Cognito credentials provider
+      AWS.config.region = 'us-east-1'; // Region
+      AWS.config.credentials = new AWS.CognitoIdentityCredentials({
+      // Provide your Pool Id here
+        IdentityPoolId: 'us-east-1:0add50ae-5529-4b4e-895d-a73756ce8fd3',
+      });
+  
+      var lexruntime = new AWS.LexRuntime();
+      var lexUserId = 'chatbot-demo' + Date.now();
+      var sessionAttributes = {};
+  
+      function pushChat() {
+  
+        // if there is text to be sent...
+        var wisdomText = document.getElementById('wisdom');
+        if (wisdomText && wisdomText.value && wisdomText.value.trim().length > 0) {
+  
+          // disable input to show we're sending it
+          var wisdom = wisdomText.value.trim();
+          wisdomText.value = '...';
+          wisdomText.locked = true;
+  
+          // send it to the Lex runtime
+          var params = {
+            botAlias: 'AliasTioGU',
+            botName: 'ElTioGU',
+            inputText: wisdom,
+            userId: lexUserId,
+            sessionAttributes: sessionAttributes
+          };
+          showRequest(wisdom);
+          lexruntime.postText(params, function(err, data) {
+            if (err) {
+              console.log(err, err.stack);
+              showError('Error:  ' + err.message + ' (see console for details)')
+            }
+            if (data) {
+              // capture the sessionAttributes for the next cycle
+              sessionAttributes = data.sessionAttributes;
+              // show response and/or error/dialog status
+              showResponse(data);
+            }
+            // re-enable input
+            wisdomText.value = '';
+            wisdomText.locked = false;
+          });
+        }
+        // we always cancel form submission
+        return false;
+      }
+  
+      function showRequest(daText) {
+  
+        var conversationDiv = document.getElementById('conversation');
+        var requestPara = document.createElement("P");
+        requestPara.className = 'userRequest';
+        requestPara.appendChild(document.createTextNode(daText));
+        conversationDiv.appendChild(requestPara);
+        conversationDiv.scrollTop = conversationDiv.scrollHeight;
+      }
+  
+      function showError(daText) {
+  
+        var conversationDiv = document.getElementById('conversation');
+        var errorPara = document.createElement("P");
+        errorPara.className = 'lexError';
+        errorPara.appendChild(document.createTextNode(daText));
+        conversationDiv.appendChild(errorPara);
+        conversationDiv.scrollTop = conversationDiv.scrollHeight;
+      }
+  
+      function showResponse(lexResponse) {
+  
+        var conversationDiv = document.getElementById('conversation');
+        var responsePara = document.createElement("P");
+        responsePara.className = 'lexResponse';
+        if (lexResponse.message) {
+          responsePara.appendChild(document.createTextNode(lexResponse.message));
+          responsePara.appendChild(document.createElement('br'));
+        }
+        if (lexResponse.dialogState === 'ReadyForFulfillment') {
+          responsePara.appendChild(document.createTextNode(
+            'Ready for fulfillment'));
+          // TODO:  show slot values
+        } else {
+          responsePara.appendChild(document.createTextNode(
+            '(' + lexResponse.dialogState + ')'));
+        }
+        conversationDiv.appendChild(responsePara);
+        conversationDiv.scrollTop = conversationDiv.scrollHeight;
+      }
+    </script>
+    <script type="text/javascript">
+      let tipsIndex = Math.floor(Math.random() * 4);
+      const tips = document.querySelectorAll(".tips .tipsGroup p");
+      const tipsCount = tips.length;
+
+      function showNextTip() {
+        const currentTip = tips[tipsIndex];
+        currentTip.style.opacity = 0;
+        let hasTransitionEnded = false;
+        currentTip.addEventListener(
+          "transitionend",
+          function () {
+            hasTransitionEnded = true;
+            currentTip.classList.remove("active");
+          },
+          { once: true }
+        );
+        setTimeout(function () {
+          if (!hasTransitionEnded) {
+            currentTip.classList.remove("active");
+          }
+          let nextIndex = tipsIndex;
+          while (nextIndex === tipsIndex) {
+            nextIndex = Math.floor(Math.random() * tipsCount);
+          }
+          const nextTip = tips[nextIndex];
+          nextTip.style.opacity = 0;
+          nextTip.classList.add("active");
+          setTimeout(function () {
+            nextTip.style.opacity = 1;
+          }, 100);
+          tipsIndex = nextIndex;
+        }, 1000);
+      }
+
+      tips[tipsIndex].classList.add("active");
+      setInterval(showNextTip, 10000);
+    </script>
+  </body>
+</html>
