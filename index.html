@@ -31,7 +31,9 @@
       body {
         color: var(--lightblue);
       }
-      .is-bold, .userRequest, .lexResponse {
+      .is-bold,
+      .userRequest,
+      .lexResponse {
         font-family: "brandon-grotesque", sans-serif;
         font-weight: 700;
         font-style: normal;
@@ -47,7 +49,8 @@
       .has-text-black {
         color: var(--black);
       }
-      .is-gradient-green, .lexResponse {
+      .is-gradient-green,
+      .lexResponse {
         background: hsla(184, 100%, 52%, 1);
         background: linear-gradient(
           135deg,
@@ -69,22 +72,46 @@
 
         filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#0AEEFF", endColorstr="#07C5D3", GradientType=1 );
         box-shadow: 0 0 26px #29e7f58c;
-        transition: all .3s ease-in;
+        transition: all 0.3s ease-in;
       }
       .is-gradient-green:hover {
         box-shadow: none;
       }
-      .userRequest, .lexResponse{padding: 1.2rem!important;font-size: 24px;}
-      .userRequest{color:var(--black);border-bottom-left-radius: 0;}
-      .userRequest{background: hsla(231, 94%, 43%, 1);
+      .userRequest,
+      .lexResponse {
+        padding: 1.2rem !important;
+        font-size: 24px;
+      }
+      .userRequest {
+        color: var(--black);
+        border-bottom-left-radius: 0;
+      }
+      .userRequest {
+        background: hsla(231, 94%, 43%, 1);
 
-background: linear-gradient(135deg, hsla(231, 94%, 43%, 1) 0%, hsla(217, 100%, 52%, 1) 100%);
+        background: linear-gradient(
+          135deg,
+          hsla(231, 94%, 43%, 1) 0%,
+          hsla(217, 100%, 52%, 1) 100%
+        );
 
-background: -moz-linear-gradient(135deg, hsla(231, 94%, 43%, 1) 0%, hsla(217, 100%, 52%, 1) 100%);
+        background: -moz-linear-gradient(
+          135deg,
+          hsla(231, 94%, 43%, 1) 0%,
+          hsla(217, 100%, 52%, 1) 100%
+        );
 
-background: -webkit-linear-gradient(135deg, hsla(231, 94%, 43%, 1) 0%, hsla(217, 100%, 52%, 1) 100%);
+        background: -webkit-linear-gradient(
+          135deg,
+          hsla(231, 94%, 43%, 1) 0%,
+          hsla(217, 100%, 52%, 1) 100%
+        );
 
-filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#0726D3", endColorstr="#0A68FF", GradientType=1 );color: var(--white);border-bottom-right-radius: 0;box-shadow: 0 0 26px #298ff57e;}
+        filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#0726D3", endColorstr="#0A68FF", GradientType=1 );
+        color: var(--white);
+        border-bottom-right-radius: 0;
+        box-shadow: 0 0 26px #298ff57e;
+      }
       .logo {
         font-family: "brandon-grotesque", sans-serif;
         font-weight: 700;
@@ -102,10 +129,27 @@ filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#0726D3", en
         float: right;
       }
       p.lexResponse {
-        margin: 4px;border-radius: 20px 20px 20px 0px;text-align: right;min-width: 50%;max-width: 85%;float: left;color: var(--black);margin-left: 60px;position: relative;
+        margin: 4px;
+        border-radius: 20px 20px 20px 0px;
+        text-align: right;
+        min-width: 50%;
+        max-width: 85%;
+        float: left;
+        color: var(--black);
+        margin-left: 60px;
+        position: relative;
       }
-      p.lexResponse::before{
-        background: url(img/tia.svg);background-repeat: no-repeat;background-size: contain;content: '';width: 60px;height: 60px;display: block;position: absolute;left: -68px;bottom: 0px;
+      p.lexResponse::before {
+        background: url(img/tia.svg);
+        background-repeat: no-repeat;
+        background-size: contain;
+        content: "";
+        width: 60px;
+        height: 60px;
+        display: block;
+        position: absolute;
+        left: -68px;
+        bottom: 0px;
       }
       p.lexError {
         margin: 4px;
@@ -119,6 +163,8 @@ filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#0726D3", en
       #conversation {
         flex: 1;
         background-color: var(--white);
+        max-height: 70svh;
+        overflow-y: scroll;
       }
       .chatPanel {
         background: rgb(32, 103, 218);
@@ -131,8 +177,8 @@ filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#0726D3", en
         border-radius: 10px 0px 0px 10px;
         z-index: 2;
         display: flex;
-    flex-direction: column;
-    justify-content: stretch;
+        flex-direction: column;
+        justify-content: stretch;
       }
       .chatContainer {
         flex-grow: 4;
@@ -164,13 +210,29 @@ filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#0726D3", en
         opacity: 1;
         display: block;
       }
-      .header{height: 5svh;}
-      .content{height: 90svh;}
-      .legal{height: 5svh;position: relative;bottom: 0;}
+      .header {
+        height: 5svh;
+      }
+      .content {
+        height: 90svh;
+        max-height: 90svh;
+      }
+      .legal {
+        height: 5svh;
+        position: relative;
+        bottom: 0;
+      }
       @media (max-width: 767.98px) {
-        .header{height: 10svh;}
-        #conversation{min-height: 60svh;}
-        .content {height: 110svh;}
+        .header {
+          height: 10svh;
+        }
+        #conversation {
+          min-height: 60svh;
+        }
+        .content {
+          height: 110svh;
+          max-height: 110svh;
+        }
         .chatPanel {
           border-radius: 0;
         }
@@ -180,11 +242,25 @@ filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#0726D3", en
         .p-3-mobile {
           padding: 0.75rem !important;
         }
-        .userRequest, .lexResponse{font-size: 18px;}
-        p.lexResponse{margin-left:40px}
-        p.lexResponse::before{
-        background: url(img/tia.svg);background-repeat: no-repeat;background-size: contain;content: '';width: 40px;height: 40px;display: block;position: absolute;left: -48px;bottom: 0px;
-      }
+        .userRequest,
+        .lexResponse {
+          font-size: 18px;
+        }
+        p.lexResponse {
+          margin-left: 40px;
+        }
+        p.lexResponse::before {
+          background: url(img/tia.svg);
+          background-repeat: no-repeat;
+          background-size: contain;
+          content: "";
+          width: 40px;
+          height: 40px;
+          display: block;
+          position: absolute;
+          left: -48px;
+          bottom: 0px;
+        }
       }
     </style>
   </head>
@@ -197,7 +273,11 @@ filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#0726D3", en
     <div class="content columns is-mobile is-multiline p-5">
       <div class="column is-12-mobile is-9-tablet chatPanel p-5 p-3-mobile">
         <div class="p-5" id="conversation"></div>
-        <form id="chatform" style="margin-top: 10px" onsubmit="return pushChat();">
+        <form
+          id="chatform"
+          style="margin-top: 10px"
+          onsubmit="return pushChat();"
+        >
           <div class="field is-grouped">
             <p class="control is-expanded">
               <input
@@ -328,7 +408,7 @@ filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#0726D3", en
       </div>
     </div>
 
-    <div class="legal columns is-mobile is-centered ">
+    <div class="legal columns is-mobile is-centered">
       <div class="column is-3-mobile is-2-tablet p-0">
         <img class="mx-auto is-block" src="img/logo-ultra.svg" />
       </div>
@@ -336,42 +416,46 @@ filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#0726D3", en
     <script type="text/javascript">
       // set the focus to the input box
       document.getElementById("wisdom").focus();
-  
+
       // Initialize the Amazon Cognito credentials provider
-      AWS.config.region = 'us-east-1'; // Region
+      AWS.config.region = "us-east-1"; // Region
       AWS.config.credentials = new AWS.CognitoIdentityCredentials({
-      // Provide your Pool Id here
-        IdentityPoolId: 'us-east-1:0add50ae-5529-4b4e-895d-a73756ce8fd3',
+        // Provide your Pool Id here
+        IdentityPoolId: "us-east-1:0add50ae-5529-4b4e-895d-a73756ce8fd3",
       });
-  
+
       var lexruntime = new AWS.LexRuntime();
-      var lexUserId = 'chatbot-demo' + Date.now();
+      var lexUserId = "chatbot-demo" + Date.now();
       var sessionAttributes = {};
-  
+
       function pushChat() {
-  
         // if there is text to be sent...
-        var wisdomText = document.getElementById('wisdom');
-        if (wisdomText && wisdomText.value && wisdomText.value.trim().length > 0) {
-  
+        var wisdomText = document.getElementById("wisdom");
+        if (
+          wisdomText &&
+          wisdomText.value &&
+          wisdomText.value.trim().length > 0
+        ) {
           // disable input to show we're sending it
           var wisdom = wisdomText.value.trim();
-          wisdomText.value = '...';
+          wisdomText.value = "...";
           wisdomText.locked = true;
-  
+
           // send it to the Lex runtime
           var params = {
-            botAlias: 'AliasTioGU',
-            botName: 'ElTioGU',
+            botAlias: "AliasTioGU",
+            botName: "ElTioGU",
             inputText: wisdom,
             userId: lexUserId,
-            sessionAttributes: sessionAttributes
+            sessionAttributes: sessionAttributes,
           };
           showRequest(wisdom);
-          lexruntime.postText(params, function(err, data) {
+          lexruntime.postText(params, function (err, data) {
             if (err) {
               console.log(err, err.stack);
-              showError('Error:  ' + err.message + ' (see console for details)')
+              showError(
+                "Error:  " + err.message + " (see console for details)"
+              );
             }
             if (data) {
               // capture the sessionAttributes for the next cycle
@@ -380,50 +464,51 @@ filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#0726D3", en
               showResponse(data);
             }
             // re-enable input
-            wisdomText.value = '';
+            wisdomText.value = "";
             wisdomText.locked = false;
           });
         }
         // we always cancel form submission
         return false;
       }
-  
+
       function showRequest(daText) {
-  
-        var conversationDiv = document.getElementById('conversation');
+        var conversationDiv = document.getElementById("conversation");
         var requestPara = document.createElement("P");
-        requestPara.className = 'userRequest';
+        requestPara.className = "userRequest";
         requestPara.appendChild(document.createTextNode(daText));
         conversationDiv.appendChild(requestPara);
         conversationDiv.scrollTop = conversationDiv.scrollHeight;
       }
-  
+
       function showError(daText) {
-  
-        var conversationDiv = document.getElementById('conversation');
+        var conversationDiv = document.getElementById("conversation");
         var errorPara = document.createElement("P");
-        errorPara.className = 'lexError';
+        errorPara.className = "lexError";
         errorPara.appendChild(document.createTextNode(daText));
         conversationDiv.appendChild(errorPara);
         conversationDiv.scrollTop = conversationDiv.scrollHeight;
       }
-  
+
       function showResponse(lexResponse) {
-  
-        var conversationDiv = document.getElementById('conversation');
+        var conversationDiv = document.getElementById("conversation");
         var responsePara = document.createElement("P");
-        responsePara.className = 'lexResponse';
+        responsePara.className = "lexResponse";
         if (lexResponse.message) {
-          responsePara.appendChild(document.createTextNode(lexResponse.message));
-          responsePara.appendChild(document.createElement('br'));
+          responsePara.appendChild(
+            document.createTextNode(lexResponse.message)
+          );
+          responsePara.appendChild(document.createElement("br"));
         }
-        if (lexResponse.dialogState === 'ReadyForFulfillment') {
-          responsePara.appendChild(document.createTextNode(
-            'Ready for fulfillment'));
+        if (lexResponse.dialogState === "ReadyForFulfillment") {
+          responsePara.appendChild(
+            document.createTextNode("Ready for fulfillment")
+          );
           // TODO:  show slot values
         } else {
-          responsePara.appendChild(document.createTextNode(
-            '(' + lexResponse.dialogState + ')'));
+          responsePara.appendChild(
+            document.createTextNode("(" + lexResponse.dialogState + ")")
+          );
         }
         conversationDiv.appendChild(responsePara);
         conversationDiv.scrollTop = conversationDiv.scrollHeight;
